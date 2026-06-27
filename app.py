@@ -5,9 +5,9 @@ import pickle
 import tensorflow as tf
 import os
 
-# ==============================================================================
+
 # Page Configuration
-# ==============================================================================
+
 
 st.set_page_config(
     page_title="Customer Churn Prediction",
@@ -15,9 +15,8 @@ st.set_page_config(
     layout="centered"
 )
 
-# ==============================================================================
 # Load Model & Preprocessor
-# ==============================================================================
+
 
 @st.cache_resource
 def load_artifacts():
@@ -51,9 +50,9 @@ except Exception as e:
     loaded = False
     error = str(e)
 
-# ==============================================================================
+
 # Title
-# ==============================================================================
+
 
 st.title("🏦 Customer Churn Prediction")
 
@@ -71,9 +70,9 @@ if not loaded:
 
 st.divider()
 
-# ==============================================================================
+
 # Customer Form
-# ==============================================================================
+
 
 with st.form("customer_form"):
 
@@ -156,23 +155,22 @@ with st.form("customer_form"):
         use_container_width=True
     )
 
-    # ==============================================================================
+
 # Prediction
-# ==============================================================================
+
 
 if submitted:
 
-    # -------------------------------
     # Feature Engineering
-    # -------------------------------
+   
 
     balance_salary_ratio = balance / (salary + 1)
 
     is_zero_balance = int(balance == 0)
 
-    # -------------------------------
+   
     # Create DataFrame
-    # -------------------------------
+   
 
     customer = pd.DataFrame([{
 
@@ -204,15 +202,15 @@ if submitted:
 
     try:
 
-        # -------------------------------
+       
         # Transform Features
-        # -------------------------------
+  
 
         X = preprocessor.transform(customer)
 
-        # -------------------------------
+ 
         # Predict
-        # -------------------------------
+        
 
         probability = float(
             model.predict(X, verbose=0)[0][0]
@@ -253,9 +251,9 @@ if submitted:
 
         st.progress(probability)
 
-        # -------------------------------
+    
         # Final Result
-        # -------------------------------
+       
 
         if prediction == 1:
 
@@ -279,9 +277,9 @@ Probability of Churn: **{probability:.2%}**
                 """
             )
 
-        # -------------------------------
+  
         # Customer Summary
-        # -------------------------------
+        
 
         st.divider()
 
@@ -295,9 +293,9 @@ Probability of Churn: **{probability:.2%}**
 
         )
 
-        # -------------------------------
+       
         # Engineered Features
-        # -------------------------------
+        
 
         st.subheader("Engineered Features")
 
@@ -337,22 +335,10 @@ Probability of Churn: **{probability:.2%}**
 
         )
 
-# ==============================================================================
+
 # Footer
-# ==============================================================================
+
 
 st.divider()
 
-st.caption(
-    """
-Customer Churn Prediction using a Deep Learning Neural Network.
-
-✔ TensorFlow / Keras
-
-✔ Scikit-Learn Preprocessor
-
-✔ Streamlit Dashboard
-
-✔ Built by Vedulla Tejaswi
-"""
-)
+st.caption()
